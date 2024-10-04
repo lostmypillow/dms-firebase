@@ -12,8 +12,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       dms-scrape:
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.4.1
+        version: 0.4.1
       firebase-admin:
         specifier: ^12.1.0
         version: 12.5.0
@@ -884,8 +884,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  dms-scrape@0.4.0:
-    resolution: {integrity: sha512-eCxbvJi5NmSSHwRZRiw9/qy4BvDk4IxaIslkLoKC/QyLuu7wYLNknjNAHXWopgOVGtdiaLXQ9obh24HIap8Ctw==}
+  dms-scrape@0.4.1:
+    resolution: {integrity: sha512-7XVdGhldAGlpYyysMKgxs9+qD+d4uk/F4RE5JBAB4qkfEYm2vcDlzm+/ei/3krmTrqrdDdDqZ34BwE9eNzOtjw==}
 
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
@@ -3408,7 +3408,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  dms-scrape@0.4.0:
+  dms-scrape@0.4.1:
     dependencies:
       cheerio: 1.0.0
       uuid: 10.0.0
