@@ -10,6 +10,6 @@
     "cheerio": "^1.0.0"
   },
   "scripts": {
-    "emu": "firebase emulators:start"
+    "dev": "firebase emulators:start"
   }
 }
