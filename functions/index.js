@@ -83,15 +83,14 @@ export const addexthtml = onRequest(
 
     // Combine data for a single update
     const updateData = {
-      ...data,  // Spread the scraped data
+      ...data, // Spread the scraped data
       error: FieldValue.delete(),
       html: FieldValue.delete(),
       priority: await getCountFromCategory(data.category),
     };
-    
+
     // Perform a single update call
     await getDocRef(req.body.id).update(updateData);
-    
 
     res.send("Document ID " + req.body.id + " modified");
   }
@@ -99,10 +98,32 @@ export const addexthtml = onRequest(
 
 //{id: eff}
 export const update = onRequest(
+  { cors: true, region: "asia-east1" },
   async (req, res) => {
-    await getDocRef(req.body.id).update(updateData)
+    await getDocRef(req.body.id).update(req.body);
   }
-)
+);
+
+export const priority = onRequest(
+  { cors: true, region: "asia-east1" },
+  async (req, res) => {
+    const sourceID = req.body.id
+    const sourceCategory = req.body.category
+    const sourcePriority = req.body.source
+    const targetPriority = req.body.target
+    const snapshot = await getColRef().where("category", "==", sourceCategory).where("priority", "==", targetPriority).get();
+    if (snapshot.empty) {
+      console.log("No matching documents.");
+      return;
+    } else {
+      const targetID = snapshot[0].data()
+      await getDocRef(sourceID).update({priority: targetPriority})
+      await getDocRef(targetID).update({priority: sourcePriority})
+    }
+
+    ;
+  }
+);
 // {data: {title: "fef"}}
 // export const addextdata = onRequest(
 //   { cors: true, region: "asia-east1" },
