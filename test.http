@@ -55,7 +55,8 @@ POST http://127.0.0.1:5001/compassprdms/asia-east1/update HTTP/1.1
 content-type: application/json
 
 {
-  "id": "f83844ed-6a32-4b94-977c-beab73926784",
-  "date": "2024-10-01"
+  "id": "bf20345d-94da-4285-a2bf-7ab7ec5f776b",
+  
+  "marked_content": ""
 }
 
