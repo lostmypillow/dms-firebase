@@ -30,6 +30,18 @@ content-type: application/json
   ]
 }
 ###
+GET http://127.0.0.1:5001/compassprdms/asia-east1/manualadd HTTP/1.1
+content-type: application/json
+
+{
+  "title": "imatitel",
+  "date": "ima date",
+  "source": "efewewewewefew",
+  "author": "eewwefeewwfw",
+  "category": "commu",
+  "content": "efeeffefew\nefwfwffw"
+}
+###
 GET http://127.0.0.1:5001/compassprdms/us-central1/addext HTTP/1.1
 content-type: application/json
 

@@ -5,3 +5,4 @@ ui-debug.log
 firestore-debug.log
 *.log
 *.log
+*.log

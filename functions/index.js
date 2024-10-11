@@ -2,7 +2,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { initializeApp } from "firebase-admin/app";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
-import {dmsScrape} from 'dms-scrape'
+import { dmsScrape } from "dms-scrape";
 import { send2LINE } from "./send2Line.mjs";
 import { getUTCDate } from "./getUTCDate.mjs";
 import { v4 as uuid } from "uuid";
@@ -33,18 +33,30 @@ const getTargetID = async (category, priority) => {
     return eyed;
   }
 };
+
+const addData2Firestore = async (data) => {
+  data["id"] = uuid();
+  data["priority"] = data.category
+    ? await getCountFromCategory(data.category)
+    : 0;
+  await getDocRef(data.id).set(data);
+};
 export const addlineurl = onRequest(
   { cors: true, region: "asia-east1" },
   async (req, res) => {
-    const data = await dmsScrape("link", req.body.events[0].message.text);
-    console.log(data);
-    data["id"] = uuid();
-    data["priority"] = data.category
-      ? await getCountFromCategory(data.category)
-      : 0;
-    await getDocRef(data.id).set(data);
+    await addData2Firestore(
+      await dmsScrape("link", req.body.events[0].message.text)
+    );
     // send2LINE(data.id, req.body.events[0].replyToken);
-    res.send("Document ID " + data.id + " added");
+    res.send("Document added");
+  }
+);
+
+export const manualadd = onRequest(
+  { cors: true, region: "asia-east1" },
+  async (req, res) => {
+    await addData2Firestore(req.body);
+    res.send("Document added");
   }
 );
 //{url: https://, html: `efnfkwnfkwnk`, id: 123}
@@ -113,7 +125,9 @@ export const update = onRequest(
         priority: req.body.targetPriority,
       });
     } else if (req.query.edit == "select") {
-      await getDocRef(req.query.id).update(req.body);
+      await getDocRef(req.query.id).update({
+        selected_content: "",
+      });
     } else if (req.query.edit == "unselect") {
       await getDocRef(req.query.id).update({
         selected_content: FieldValue.delete(),
