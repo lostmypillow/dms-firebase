@@ -126,11 +126,17 @@ export const update = onRequest(
       });
     } else if (req.query.edit == "select") {
       await getDocRef(req.query.id).update({
-        selected_content: "",
+        selected_content_chi_title: "",
+        selected_content_chi: "",
+        selected_content_eng_title: "",
+        selected_content_eng: "",
       });
     } else if (req.query.edit == "unselect") {
       await getDocRef(req.query.id).update({
-        selected_content: FieldValue.delete(),
+        selected_content_chi_title: FieldValue.delete(),
+        selected_content_chi: FieldValue.delete(),
+        selected_content_eng_title: FieldValue.delete(),
+        selected_content_eng: FieldValue.delete(),
       });
     }
 
