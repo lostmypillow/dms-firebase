@@ -5,10 +5,7 @@ content-type: application/json
   "events": [
     {
       "message": {
-        "id": "444573844083572737",
-        "type": "text",
-        "quoteToken": "q3Plxr4AgKd...",
-        "text": "https://www.chinatimes.com/realtimenews/20240904005289-260410?chdtv"
+        "text": "https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?CnlID=1&id=0000704987_L3I8Z2489II12J62MPS7V&wpidx=5"
       }
     }
   ]
