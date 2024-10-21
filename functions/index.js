@@ -147,36 +147,26 @@ export const update = onRequest(
 export const deleteDoc = onRequest(
   { cors: true, region: "asia-east1" },
   async (req, res) => {
-    await getDocRef(req.query.id).delete();
+    const deleteID = req.query.id;
+    const getOrigData = (await getDocRef(deleteID).get()).data();
+    const deleteCategory = getOrigData.category;
+    const deletePriority = getOrigData.priority;
+    await getDocRef(deleteID).delete();
+    const snapshot = await getColRef()
+      .where("category", "==", deleteCategory)
+      .where("priority", ">", deletePriority)
+      .get();
+    if (!snapshot.empty) {
+      let arr = [];
+      snapshot.forEach((doc) => {
+        arr.push(doc.data());
+      });
+      for (const doc of arr) {
+        await getDocRef(doc.id).update({
+          priority: FieldValue.increment(-1),
+        });
+      }
+    }
     res.send("Document ID " + req.query.id + " deleted");
   }
 );
-// {"sourceID": , "sourceCategory": , "sourcePriority": , "targetPriority": }
-// export const priority = onRequest(
-//   { cors: true, region: "asia-east1" },
-//   async (req, res) => {
-
-//     res.send("Document ID " + req.body.sourceID + " modified");
-//   }
-// );
-// {data: {title: "fef"}}
-// export const addextdata = onRequest(
-//   { cors: true, region: "asia-east1" },
-//   async (req, res) => {
-//     const data = req.body.data;
-//     data["id"] = uuid();
-//     await getDocRef(data.id).set(data);
-//     res.send("Document ID " + data.id + " added");
-//   }
-// );
-
-// {url: https://ccc.com}
-// export const addexturl = onRequest(
-//   { cors: true, region: "asia-east1" },
-//   async (req, res) => {
-//     const data = await dmsScrape("link", req.body.url);
-//     data["id"] = uuid();
-//     await getDocRef(data.id).set(data);
-//     res.send("Document ID " + data.id + " added");
-//   }
-// );
