@@ -44,9 +44,12 @@ const addData2Firestore = async (data) => {
 export const addlineurl = onRequest(
   { cors: true, region: "asia-east1" },
   async (req, res) => {
-    await addData2Firestore(
-      await dmsScrape("link", req.body.events[0].message.text)
-    );
+    let origtxt = req.body.events[0].message.text;
+    if (!origtxt.startsWith("http")) {
+      origtxt = origtxt.slice(origtxt.indexOf("http"));
+    }
+
+    await addData2Firestore(await dmsScrape(origtxt));
     // send2LINE(data.id, req.body.events[0].replyToken);
     res.send("Document added");
   }
@@ -63,7 +66,7 @@ export const manualadd = onRequest(
 export const addhtml = onRequest(
   { cors: true, region: "asia-east1" },
   async (req, res) => {
-    const data = await dmsScrape("html", req.body.url, req.body.html);
+    const data = await dmsScrape(req.body.url, req.body.html);
 
     const updateData = {
       ...data,
